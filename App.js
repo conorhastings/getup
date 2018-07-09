@@ -7,6 +7,7 @@ import { ApolloProvider, Query } from "react-apollo";
 import { Rehydrated } from "aws-appsync-react";
 import gql from "graphql-tag";
 import { Button } from "react-native-elements";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 import ClothingRow from "./components/ClothingRow";
 import Outfit from "./components/Outfit";
@@ -57,7 +58,8 @@ const client = new AWSAppSyncClient({
   auth: {
     type: AppSyncConfig.authenticationType,
     apiKey: AppSyncConfig.apiKey
-  }
+  },
+  disableOffline: true
 });
 
 export default class App extends React.Component {
@@ -77,6 +79,7 @@ export default class App extends React.Component {
         <Rehydrated>
           <Query query={CLOTHING_QUERY}>
             {({ loading, error, data }) => {
+              console.log(data);
               if (loading) {
                 return <Text>Loading...</Text>;
               }
@@ -89,6 +92,23 @@ export default class App extends React.Component {
                   }}
                 >
                   <View style={styles.container}>
+                    {this.state.currentPage !== "pick" && (
+                      <View
+                        style={{
+                          position: "absolute",
+                          top: 60,
+                          left: 10,
+                          zIndex: 1
+                        }}
+                      >
+                        <Icon
+                          name="arrow-circle-left"
+                          size={40}
+                          color="#B3ABAB"
+                          onPress={() => this.setState({ currentPage: "pick" })}
+                        />
+                      </View>
+                    )}
                     <Image source={require("./logo.png")} />
                     {this.state.currentPage === "pick" && (
                       <ScrollView showsVerticalScrollIndicator={false}>
@@ -162,7 +182,7 @@ export default class App extends React.Component {
                     {this.state.currentPage === "outfit" && (
                       <Outfit {...this.state.selectedItems} />
                     )}
-                    {this.state.currentPage !== "outfit" && (
+                    {this.state.currentPage === "pick" && (
                       <Button
                         title="see my outfit"
                         buttonStyle={{
@@ -171,8 +191,7 @@ export default class App extends React.Component {
                           height: 45,
                           borderColor: "transparent",
                           borderWidth: 0,
-                          borderRadius: 5,
-                          opacity: 0.8
+                          borderRadius: 5
                         }}
                         containerStyle={{ marginTop: 20 }}
                         onPress={() => this.setState({ currentPage: "outfit" })}
