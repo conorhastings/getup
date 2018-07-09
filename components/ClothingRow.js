@@ -5,7 +5,7 @@ import {
   View,
   Text,
   Image,
-  TouchableOpacity,
+  TouchableOpacity
 } from "react-native";
 
 export default class ClothingRow extends Component {
@@ -18,17 +18,19 @@ export default class ClothingRow extends Component {
             <TouchableOpacity
               onPress={() =>
                 this.props.onPressItem(
-                  this.props.selected && this.props.selected.id === item.id ? null : item
+                  this.props.selected && this.props.selected.id === item.id
+                    ? null
+                    : item
                 )
               }
               key={item.id}
               style={
                 this.props.selected && this.props.selected.id === item.id
                   ? {
-                      borderBottomColor: "#B3ABAB",
-                      borderBottomWidth: 5
+                      borderTopColor: "#66327C",
+                      borderTopWidth: 5
                     }
-                  : { borderBottomColor: "transparent", borderBottomWidth: 5 }
+                  : { borderTopColor: "transparent", borderTopWidth: 5 }
               }
             >
               <View style={styles.item}>
@@ -37,7 +39,7 @@ export default class ClothingRow extends Component {
                   style={{ width: 150, height: 150 }}
                   resizeMode="contain"
                 />
-                <Text style={{ color: "#B3ABAB" }}>{item.brand}</Text>
+                <Text style={{ color: "#66327C" }}>{item.brand}</Text>
               </View>
             </TouchableOpacity>
           ))}
@@ -49,7 +51,9 @@ export default class ClothingRow extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 25
+    marginBottom: 25,
+    borderBottomColor: "#66327C",
+    borderBottomWidth: 2
   },
   row: {
     paddingTop: 10
@@ -62,7 +66,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 22,
-    color: "#B3ABAB",
+    color: "#66327C",
     fontWeight: "700"
   }
 });

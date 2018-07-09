@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Image, ScrollView } from "react-native";
 import { Button } from "react-native-elements";
+import gql from 'graphql-tag';
+
 
 function OutfitImage({ style, source }) {
   console.log(style);
@@ -38,7 +40,7 @@ export default function Outfit({ hat, jacket, shirt, pants, shoes, ...rest }) {
       <Button
         title="wear"
         buttonStyle={{
-          backgroundColor: "rgba(242, 176, 198, 0.8)",
+          backgroundColor: "#66327C",
           width: 300,
           height: 45,
           borderColor: "transparent",

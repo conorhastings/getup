@@ -86,7 +86,6 @@ export default class App extends React.Component {
               return (
                 <View
                   style={{
-                    backgroundColor: "#4E4B4B",
                     height: "100%",
                     width: "100%"
                   }}
@@ -96,7 +95,7 @@ export default class App extends React.Component {
                       <View
                         style={{
                           position: "absolute",
-                          top: 60,
+                          top: 50,
                           left: 10,
                           zIndex: 1
                         }}
@@ -104,12 +103,16 @@ export default class App extends React.Component {
                         <Icon
                           name="arrow-circle-left"
                           size={40}
-                          color="#B3ABAB"
+                          color="#66327C"
                           onPress={() => this.setState({ currentPage: "pick" })}
                         />
                       </View>
                     )}
-                    <Image source={require("./logo.png")} />
+                    <View style={{
+                      marginLeft: 80
+                    }}>
+                      <Image source={require("./logo.png")} />
+                    </View>
                     {this.state.currentPage === "pick" && (
                       <ScrollView showsVerticalScrollIndicator={false}>
                         <ClothingRow
@@ -186,7 +189,7 @@ export default class App extends React.Component {
                       <Button
                         title="see my outfit"
                         buttonStyle={{
-                          backgroundColor: "rgba(242, 176, 198, 0.8)",
+                          backgroundColor: "#66327C",
                           width: 300,
                           height: 45,
                           borderColor: "transparent",
