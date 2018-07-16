@@ -1,6 +1,13 @@
 {
   "expo": {
     "sdkVersion": "27.0.0",
-    "privacy": "unlisted"
+    "privacy": "unlisted",
+    "name": "Getup",
+    "icon": "./icon.png",
+    "version": "1.0.1",
+    "slug": "getup",
+    "ios": {
+      "bundleIdentifier": "com.getup.getup"
+    }
   }
 }

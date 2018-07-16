@@ -109,7 +109,7 @@ export default class App extends React.Component {
                       </View>
                     )}
                     <View style={{
-                      marginLeft: 80
+                      marginLeft: 50
                     }}>
                       <Image source={require("./logo.png")} />
                     </View>

@@ -1,57 +1,72 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Image, ScrollView } from "react-native";
+import { StyleSheet, View, Image, ScrollView, CameraRoll } from "react-native";
 import { Button } from "react-native-elements";
-import gql from 'graphql-tag';
-
+import { takeSnapshotAsync } from "expo";
+console.log(takeSnapshotAsync, "f ot all")
+const value = {
+  format: "jpg",
+  quality: 0.9
+};
 
 function OutfitImage({ style, source }) {
-  console.log(style);
   return <Image source={source} style={style} resizeMode="contain" />;
 }
 
-export default function Outfit({ hat, jacket, shirt, pants, shoes, ...rest }) {
-  return (
-    <View>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {hat && (
-          <OutfitImage source={{ uri: hat.image_url }} style={styles.hat} />
-        )}
-        <View style={styles.jacketShirtContainer}>
-          {jacket && (
-            <OutfitImage
-              source={{ uri: jacket.image_url }}
-              style={styles.jacket}
-            />
-          )}
-          {shirt && (
-            <OutfitImage
-              source={{ uri: shirt.image_url }}
-              style={styles.shirt}
-            />
-          )}
-        </View>
-        {pants && (
-          <OutfitImage source={{ uri: pants.image_url }} style={styles.pants} />
-        )}
-        {shoes && (
-          <OutfitImage source={{ uri: shoes.image_url }} style={styles.shoes} />
-        )}
-      </ScrollView>
-      <Button
-        title="wear"
-        buttonStyle={{
-          backgroundColor: "#66327C",
-          width: 300,
-          height: 45,
-          borderColor: "transparent",
-          borderWidth: 0,
-          borderRadius: 5
-        }}
-        containerStyle={{ marginTop: 20 }}
-        onPress={() => this.setState({ currentPage: "outfit" })}
-      />
-    </View>
-  );
+export default class Outfit extends React.Component {
+  render() {
+    const { hat, jacket, shirt, pants, shoes } = this.props;
+    return (
+      <View>
+        <ScrollView showsVerticalScrollIndicator={false} ref={viewShot => (this.viewShot = viewShot)}>
+            {hat && (
+              <OutfitImage source={{ uri: hat.image_url }} style={styles.hat} />
+            )}
+            <View style={styles.jacketShirtContainer}>
+              {jacket && (
+                <OutfitImage
+                  source={{ uri: jacket.image_url }}
+                  style={styles.jacket}
+                />
+              )}
+              {shirt && (
+                <OutfitImage
+                  source={{ uri: shirt.image_url }}
+                  style={styles.shirt}
+                />
+              )}
+            </View>
+            {pants && (
+              <OutfitImage
+                source={{ uri: pants.image_url }}
+                style={styles.pants}
+              />
+            )}
+            {shoes && (
+              <OutfitImage
+                source={{ uri: shoes.image_url }}
+                style={styles.shoes}
+              />
+            )}
+        </ScrollView>
+        <Button
+          title="Save Outfit Image"
+          buttonStyle={{
+            backgroundColor: "#66327C",
+            width: 300,
+            height: 45,
+            borderColor: "transparent",
+            borderWidth: 0,
+            borderRadius: 5
+          }}
+          containerStyle={{ marginTop: 20 }}
+          onPress={() => {
+            takeSnapshotAsync(this.viewShot, value)
+              .then(image => CameraRoll.saveToCameraRoll(image));
+          }}
+        />
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
