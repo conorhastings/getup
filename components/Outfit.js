@@ -1,8 +1,14 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Image, ScrollView, CameraRoll } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  ScrollView,
+  CameraRoll,
+  Alert
+} from "react-native";
 import { Button } from "react-native-elements";
 import { takeSnapshotAsync } from "expo";
-console.log(takeSnapshotAsync, "f ot all")
 const value = {
   format: "jpg",
   quality: 0.9
@@ -17,36 +23,39 @@ export default class Outfit extends React.Component {
     const { hat, jacket, shirt, pants, shoes } = this.props;
     return (
       <View>
-        <ScrollView showsVerticalScrollIndicator={false} ref={viewShot => (this.viewShot = viewShot)}>
-            {hat && (
-              <OutfitImage source={{ uri: hat.image_url }} style={styles.hat} />
-            )}
-            <View style={styles.jacketShirtContainer}>
-              {jacket && (
-                <OutfitImage
-                  source={{ uri: jacket.image_url }}
-                  style={styles.jacket}
-                />
-              )}
-              {shirt && (
-                <OutfitImage
-                  source={{ uri: shirt.image_url }}
-                  style={styles.shirt}
-                />
-              )}
-            </View>
-            {pants && (
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          ref={viewShot => (this.viewShot = viewShot)}
+        >
+          {hat && (
+            <OutfitImage source={{ uri: hat.image_url }} style={styles.hat} />
+          )}
+          <View style={styles.jacketShirtContainer}>
+            {jacket && (
               <OutfitImage
-                source={{ uri: pants.image_url }}
-                style={styles.pants}
+                source={{ uri: jacket.image_url }}
+                style={styles.jacket}
               />
             )}
-            {shoes && (
+            {shirt && (
               <OutfitImage
-                source={{ uri: shoes.image_url }}
-                style={styles.shoes}
+                source={{ uri: shirt.image_url }}
+                style={styles.shirt}
               />
             )}
+          </View>
+          {pants && (
+            <OutfitImage
+              source={{ uri: pants.image_url }}
+              style={styles.pants}
+            />
+          )}
+          {shoes && (
+            <OutfitImage
+              source={{ uri: shoes.image_url }}
+              style={styles.shoes}
+            />
+          )}
         </ScrollView>
         <Button
           title="Save Outfit Image"
@@ -59,10 +68,12 @@ export default class Outfit extends React.Component {
             borderRadius: 5
           }}
           containerStyle={{ marginTop: 20 }}
-          onPress={() => {
-            takeSnapshotAsync(this.viewShot, value)
-              .then(image => CameraRoll.saveToCameraRoll(image));
-          }}
+          onPress={() => 
+            takeSnapshotAsync(this.viewShot, value).then(image => {
+              CameraRoll.saveToCameraRoll(image);
+              Alert.alert('Outfit Saved!', 'Your outfit has successfully been saved to your camera roll ');
+            })
+          }
         />
       </View>
     );
